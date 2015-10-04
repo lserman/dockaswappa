@@ -4,7 +4,9 @@ module Dockaswappa
   class Poller
     attr_reader :timeout
 
-    def initialize(timeout)
+    DEFAULT_TIMEOUT = 15
+
+    def initialize(timeout: DEFAULT_TIMEOUT)
       @timeout = timeout
     end
 

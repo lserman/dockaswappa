@@ -1,5 +1,5 @@
 describe Dockaswappa::Poller do
-  let(:poller) { Dockaswappa::Poller.new 5 }
+  let(:poller) { Dockaswappa::Poller.new timeout: 5 }
 
   describe '#poll_until' do
     it 'polls block returns true' do

@@ -1,5 +1,3 @@
-require 'timeout'
-
 module Dockaswappa
   class Docker
     include Dockaswappa::Logger
