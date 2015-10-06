@@ -1,6 +1,7 @@
 require 'capistrano/all'
 require 'dockaswappa/version'
 require 'dockaswappa/logger'
+require 'dockaswappa/docker_command'
 require 'dockaswappa/docker'
 require 'dockaswappa/container'
 require 'dockaswappa/poller'

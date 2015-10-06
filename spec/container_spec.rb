@@ -1,6 +1,10 @@
 describe Dockaswappa::Container do
   let(:container) { Dockaswappa::Container.new '12345' }
 
+  before do
+    allow(container).to receive(:docker_absolute_command_path) { 'docker' }
+  end
+
   describe '#stop' do
     it 'returns the container ID if successful' do
       expect(container).to receive(:`).with('docker stop 12345') { `true` }
@@ -20,7 +24,7 @@ describe Dockaswappa::Container do
     end
 
     it 'returns true when curl returns 200' do
-      expect(container).to receive(:`).with(/curl/) do
+      expect(container).to receive(:curl) do
         <<-CURL
         HTTP/1.1 200 OK
         Date: Tue, 29 Sep 2015 04:13:39 GMT
@@ -30,7 +34,7 @@ describe Dockaswappa::Container do
     end
 
     it 'returns false when curl times out' do
-      expect(container).to receive(:`).with(/curl/) do
+      expect(container).to receive(:curl) do
         "curl: (6) Could not resolve host"
       end
       expect(container).to_not be_up_on_port 80

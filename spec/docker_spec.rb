@@ -1,6 +1,10 @@
 describe Dockaswappa::Docker do
   let(:docker) { Dockaswappa::Docker.new 'busybox' }
 
+  before do
+    allow(docker).to receive(:docker_absolute_command_path) { 'docker' }
+  end
+
   describe '#pull' do
     it 'returns the output if successful' do
       expect(docker).to receive(:`).with('docker pull busybox') { `echo 'test'`.strip }

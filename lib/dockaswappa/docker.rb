@@ -1,5 +1,6 @@
 module Dockaswappa
   class Docker
+    include Dockaswappa::DockerCommand
     include Dockaswappa::Logger
 
     attr_reader :image
@@ -10,7 +11,7 @@ module Dockaswappa
 
     def pull
       logger.info "Pulling image..."
-      out = `docker pull #{image}`
+      out = docker "pull #{image}"
       if $?.success?
         logger.info out
         out
@@ -20,13 +21,13 @@ module Dockaswappa
     end
 
     def ps
-      `docker ps --filter name=#{base_name} -q`.split("\n").map do |id|
+      docker("ps --filter name=#{base_name} -q").split("\n").map do |id|
         Dockaswappa::Container.new id
       end
     end
 
     def run
-      id = `docker run -d -p 80 -e VIRTUAL_HOST=app --name #{timestamped_name} #{image}:latest`
+      id = docker "run -d -p 80 -e VIRTUAL_HOST=app --name #{timestamped_name} #{image}:latest"
       if $?.success?
         logger.info "Container running: #{id}"
         Dockaswappa::Container.new id
